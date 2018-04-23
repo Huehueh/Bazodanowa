@@ -1,19 +1,16 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-#include <QString>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
+#include <QString>
 
-class DbManager
-{
+class DbManager {
 public:
-    DbManager(const QString& path);
-    QSqlTableModel* GetModel(QObject* parent, const QString& tableName);
+  DbManager(const QString &path);
 
 private:
-    QSqlDatabase m_db;
-
+  QSqlDatabase m_db;
 };
 
 #endif // DBMANAGER_H
