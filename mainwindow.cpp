@@ -36,5 +36,5 @@ QSqlTableModel *MainWindow::CreateTableModel() {
 
 void MainWindow::OnAddButtonClicked() {
   AddCompanyDialog *dialog = new AddCompanyDialog(m_tableModel, this);
-  dialog->show();
+  dialog->exec();
 }
