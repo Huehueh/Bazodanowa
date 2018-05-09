@@ -3,11 +3,14 @@
 
 #include <QDataWidgetMapper>
 #include <QDialog>
+#include <QModelIndex>
 #include <QSqlTableModel>
 
 namespace Ui {
 class AddCompanyDialog;
 }
+
+enum class eCompanyData { Id, Name, Nip, Address, Email };
 
 class AddCompanyDialog : public QDialog {
   Q_OBJECT
@@ -21,9 +24,12 @@ class AddCompanyDialog : public QDialog {
   void OnCancel();
 
  private:
+  void createUi();
+
   Ui::AddCompanyDialog *ui;
   QSqlTableModel *m_pModel;
   QDataWidgetMapper *m_pMapper;
+  QModelIndex m_Index;
 };
 
 #endif  // ADDCOMPANYDIALOG_H
