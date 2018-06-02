@@ -5,11 +5,12 @@
 #include <QModelIndex>
 #include <QRegExpValidator>
 #include <QSqlRecord>
+#include <QSqlTableModel>
 
-AddCompanyDialog::AddCompanyDialog(QSqlTableModel* model, QWidget* parent)
-    : QDialog(parent),
-      ui(new Ui::AddCompanyDialog),
-      m_pModel(model),
+#include "enums.h"
+
+AddCompanyDialog::AddCompanyDialog(QSqlTableModel *model, QWidget *parent)
+    : QDialog(parent), ui(new Ui::AddCompanyDialog), m_pModel(model),
       m_pMapper(nullptr) {
   ui->setupUi(this);
 
@@ -17,24 +18,22 @@ AddCompanyDialog::AddCompanyDialog(QSqlTableModel* model, QWidget* parent)
   m_pMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
   m_pMapper->setModel(model);
   model->insertRow(model->rowCount(QModelIndex()));
+  m_pMapper->toLast();
 
   // name
-  m_pMapper->addMapping(ui->nameLineEdit, static_cast<int>(eCompanyData::Name));
+  m_pMapper->addMapping(ui->nameLineEdit, MojaFirma::Nazwa);
 
   // nip
-  m_pMapper->addMapping(ui->nipLineEdit, static_cast<int>(eCompanyData::Nip));
+  m_pMapper->addMapping(ui->nipLineEdit, MojaFirma::NIP);
   QRegExp rx("[0-9]\\d{0,9}");
   auto validator = new QRegExpValidator(rx, this);
   ui->nipLineEdit->setValidator(validator);
 
   // address
-  m_pMapper->addMapping(ui->addressLineEdit,
-                        static_cast<int>(eCompanyData::Address));
+  m_pMapper->addMapping(ui->addressLineEdit, MojaFirma::Adres);
 
   // email
-  m_pMapper->addMapping(ui->emailLineEdit,
-                        static_cast<int>(eCompanyData::Email));
-  m_pMapper->toLast();
+  m_pMapper->addMapping(ui->emailLineEdit, MojaFirma::Email);
 
   connect(ui->okButton, &QPushButton::clicked, this,
           &AddCompanyDialog::OnAccept);

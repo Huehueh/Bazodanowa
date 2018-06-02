@@ -5,8 +5,8 @@
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
 
-  DbManager dbManager("database/bazodanowa.db");
-  MainWindow w(dbManager);
+  DbManager::CreateInstance("db/bazodanowa.db");
+  MainWindow w;
   w.show();
 
   return a.exec();

@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <dbmanager.h>
 #include <QMainWindow>
 #include <QSqlTableModel>
+#include <dbmanager.h>
 
 namespace Ui {
 class MainWindow;
@@ -12,18 +12,18 @@ class MainWindow;
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
- public:
-  explicit MainWindow(DbManager &manager, QWidget *parent = 0);
+public:
+  explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
-  QSqlTableModel *CreateTableModel();
 
- private slots:
+private slots:
   void OnAddButtonClicked();
+  void OnRemoveButtonClicked();
+  void OnOpenButtonClicked();
 
- private:
+private:
   Ui::MainWindow *ui;
-  DbManager *pDbManager;
   QSqlTableModel *m_tableModel;
 };
 
-#endif  // MAINWINDOW_H
+#endif // MAINWINDOW_H

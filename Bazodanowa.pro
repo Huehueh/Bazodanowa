@@ -15,11 +15,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     dbmanager.cpp \
-    addcompanydialog.cpp
+    addcompanydialog.cpp \
+    companydialog.cpp \
+    salepurchasedelegate.cpp
 
 HEADERS  += mainwindow.h \
     dbmanager.h \
-    addcompanydialog.h
+    addcompanydialog.h \
+    companydialog.h \
+    salepurchasedelegate.h \
+    enums.h \
+    names.h
 
 FORMS    += mainwindow.ui \
+    companydialog.ui \
     addcompanydialog.ui

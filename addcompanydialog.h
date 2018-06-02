@@ -10,8 +10,6 @@ namespace Ui {
 class AddCompanyDialog;
 }
 
-enum class eCompanyData { Id, Name, Nip, Address, Email };
-
 class AddCompanyDialog : public QDialog {
   Q_OBJECT
 

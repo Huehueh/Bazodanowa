@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>AddCompanyDialog</class>
+ <widget class="QWidget" name="AddCompanyDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>0</y>
      <width>381</width>
-     <height>221</height>
+     <height>240</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
