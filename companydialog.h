@@ -1,24 +1,37 @@
 #ifndef COMPANYDIALOG_H
 #define COMPANYDIALOG_H
 
+#include <QCalendarWidget>
+#include <QDateEdit>
 #include <QDialog>
+#include <QSqlTableModel>
+#include <memory>
 
 namespace Ui {
 class CompanyDialog;
 }
 
-class CompanyDialog : public QDialog {
+class SalePurchaseDialog : public QDialog {
   Q_OBJECT
 
 public:
-  explicit CompanyDialog(int companyId, QWidget *parent = nullptr);
-  ~CompanyDialog();
+  SalePurchaseDialog(int companyId, QWidget *parent = nullptr);
+  ~SalePurchaseDialog();
+
+protected:
+  bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
-  Ui::CompanyDialog *ui;
-  int mCompanyId;
   void SetupSaleTab();
   void SetupPurchaseTab();
+  void CreateSalesMapper();
+
+  void SetupDateEdit(QDateEdit *dateEdit);
+
+  Ui::CompanyDialog *ui = nullptr;
+  int mCompanyId;
+  QSqlTableModel *m_pSalesModel = nullptr;
+  QSqlTableModel *m_pPurchaseModel = nullptr;
 };
 
 #endif // COMPANYDIALOG_H

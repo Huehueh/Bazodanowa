@@ -25,6 +25,7 @@ HEADERS  += mainwindow.h \
     companydialog.h \
     salepurchasedelegate.h \
     enums.h \
+    columnnames.h \
     names.h
 
 FORMS    += mainwindow.ui \

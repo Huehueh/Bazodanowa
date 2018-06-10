@@ -44,10 +44,8 @@ void SalePurchaseDelegate::setEditorData(QWidget *editor,
     comboBox->setCurrentText(value);
     break;
   }
-
   default: {
     QSqlRelationalDelegate::setEditorData(editor, index);
-
     break;
   }
   }

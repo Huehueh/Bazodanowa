@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QTableView>
 
+#include "columnnames.h"
 #include "enums.h"
 #include "names.h"
 
@@ -38,39 +39,57 @@ DbManager::DbManager(const QString &path) {
 QSqlTableModel *DbManager::CreateMyCompaniesModel() {
   QSqlDatabase db = QSqlDatabase::database();
   QSqlTableModel *model = new QSqlTableModel(nullptr, db);
-  model->setTable(Names::mojeFirmy);
+  model->setTable(TableNames::mojeFirmy);
   model->select();
 
-  //  model->setHeaderData(MojaFirma::Skrot, Qt::Horizontal,
-  //                       "Skrócona nazwa firmy");
-  //  model->setHeaderData(MojaFirma::eData::Nazwa, Qt::Horizontal, "Nazwa
-  //  firmy"); model->setHeaderData(MojaFirma::NIP, Qt::Horizontal, "NIP");
-  //  model->setHeaderData(MojaFirma::Adres, Qt::Horizontal, "Adres");
-  //  model->setHeaderData(MojaFirma::Email, Qt::Horizontal, "Email");
+  for (const auto &it : ColumnNames::my_companies) {
+    model->setHeaderData(it.first, Qt::Horizontal, it.second);
+  }
+  return model;
+}
 
+QSqlTableModel *DbManager::CreateContractorsModel() {
+  QSqlDatabase db = QSqlDatabase::database();
+  QSqlTableModel *model = new QSqlTableModel(nullptr, db);
+  model->setTable(TableNames::konrahenci);
+  model->select();
+
+  for (const auto &it : ColumnNames::contractors) {
+    model->setHeaderData(it.first, Qt::Horizontal, it.second);
+  }
   return model;
 }
 
 QSqlRelationalTableModel *DbManager::CreateSalesModel(int companyId) {
   auto db = QSqlDatabase::database();
   auto *model = new QSqlRelationalTableModel(nullptr, db);
-  model->setTable(Names::sprzedaz);
-  model->setFilter("FirmaId=" + QString::number(companyId));
+  model->setTable(TableNames::sprzedaz);
+  model->setFilter("FirmaId='" + QString::number(companyId) + "'");
 
   model->setRelation(Sprzedaz::KontrahentId,
-                     QSqlRelation(Names::konrahenci, "KontrahentId", "Nazwa"));
+                     QSqlRelation(TableNames::konrahenci, "Id", "Nazwa"));
   model->select();
 
-  //  model->setHeaderData(Sprzedaz::Id, Qt::Horizontal, "Id");
-  //  // model->setHeaderData(Sprzedaz::KontrahentId, Qt::Horizontal,
-  //  "Kontrahent");
+  for (const auto &it : ColumnNames::sale) {
+    model->setHeaderData(it.first, Qt::Horizontal, it.second);
+  }
 
-  //  model->setHeaderData(Sprzedaz::DowodSprzedazy, Qt::Horizontal,
-  //                       "Dowód sprzedaży");
-  //  model->setHeaderData(Sprzedaz::DataSprzedazy, Qt::Horizontal,
-  //                       "Data sprzedaży");
-  //  model->setHeaderData(Sprzedaz::DataWystawienia, Qt::Horizontal,
-  //                       "Data wystawienia");
+  return model;
+}
+
+QSqlRelationalTableModel *DbManager::CreatePurchaseModel(int companyId) {
+  auto db = QSqlDatabase::database();
+  auto *model = new QSqlRelationalTableModel(nullptr, db);
+  model->setTable(TableNames::zakup);
+  model->setFilter("FirmaId='" + QString::number(companyId) + "'");
+
+  model->setRelation(Sprzedaz::KontrahentId,
+                     QSqlRelation(TableNames::konrahenci, "Id", "Nazwa"));
+  model->select();
+
+  for (const auto &it : ColumnNames::purchase) {
+    model->setHeaderData(it.first, Qt::Horizontal, it.second);
+  }
 
   return model;
 }

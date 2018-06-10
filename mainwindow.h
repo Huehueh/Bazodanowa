@@ -22,6 +22,10 @@ private slots:
   void OnOpenButtonClicked();
 
 private:
+  void MakeConnections();
+  void CreateMapper();
+  void SetupTableView();
+
   Ui::MainWindow *ui;
   QSqlTableModel *m_tableModel;
 };

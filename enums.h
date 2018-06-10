@@ -8,21 +8,30 @@ struct Sprzedaz {
     KontrahentId,
     DowodSprzedazy,
     DataSprzedazy,
-    DataWystawienia
+    DataWystawienia,
+    LiczbaKolumn
 
   };
 };
 
 struct Zakup {
-  enum eData { Id, FirmaId, KontrahentId, DowodZakupu, DataZakupu, DataWplywu };
+  enum eData {
+    Id,
+    FirmaId,
+    KontrahentId,
+    DowodZakupu,
+    DataZakupu,
+    DataWplywu,
+    LiczbaKolumn
+  };
 };
 
 struct MojaFirma {
-  enum eData { Id, Skrot, Nazwa, NIP, Adres, Email };
+  enum eData { Id, Skrot, Nazwa, NIP, Adres, Email, LiczbaKolumn };
 };
 
 struct Kontrahent {
-  enum eData { Id, Nazwa, NIP, Pesel };
+  enum eData { Id, Nazwa, NIP, Pesel, LiczbaKolumn };
 };
 
 #endif // ENUMS_H

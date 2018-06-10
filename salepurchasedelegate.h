@@ -18,7 +18,7 @@ signals:
 public slots:
 
 private:
-  const QString dateFormat = "yyy-MM-dd";
+  const QString dateFormat = "yyyy-MM-dd";
 };
 
 #endif // SALEPURCHASEDELEGATE_H

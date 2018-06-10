@@ -20,6 +20,9 @@ AddCompanyDialog::AddCompanyDialog(QSqlTableModel *model, QWidget *parent)
   model->insertRow(model->rowCount(QModelIndex()));
   m_pMapper->toLast();
 
+  // shortcut
+  m_pMapper->addMapping(ui->shortcutLineEdit, MojaFirma::Skrot);
+
   // name
   m_pMapper->addMapping(ui->nameLineEdit, MojaFirma::Nazwa);
 
@@ -44,12 +47,13 @@ AddCompanyDialog::AddCompanyDialog(QSqlTableModel *model, QWidget *parent)
 void AddCompanyDialog::OnAccept() {
   m_pMapper->submit();
   m_pModel->submitAll();
-  close();
+  accept();
 }
 
 void AddCompanyDialog::OnCancel() {
-  m_pModel->removeRow(-1, m_Index);
-  close();
+  auto last = m_pModel->rowCount() - 1;
+  m_pModel->removeRow(last, m_Index);
+  reject();
 }
 
 AddCompanyDialog::~AddCompanyDialog() { delete ui; }
