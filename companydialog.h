@@ -21,6 +21,9 @@ public:
 protected:
   bool eventFilter(QObject *object, QEvent *event) override;
 
+private slots:
+  void OpenContractorDialog();
+
 private:
   void SetupSaleTab();
   void SetupPurchaseTab();

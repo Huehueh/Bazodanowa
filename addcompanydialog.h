@@ -10,24 +10,27 @@ namespace Ui {
 class AddCompanyDialog;
 }
 
+enum CompanyType { Main, Contactor };
+
 class AddCompanyDialog : public QDialog {
   Q_OBJECT
 
- public:
-  explicit AddCompanyDialog(QSqlTableModel *model, QWidget *parent = nullptr);
+public:
+  explicit AddCompanyDialog(CompanyType company, QWidget *parent = nullptr);
   ~AddCompanyDialog();
 
- private slots:
+private slots:
   void OnAccept();
   void OnCancel();
 
- private:
-  void createUi();
+private:
+  void CreateUi();
 
   Ui::AddCompanyDialog *ui;
   QSqlTableModel *m_pModel;
   QDataWidgetMapper *m_pMapper;
   QModelIndex m_Index;
+  CompanyType m_CompanyType;
 };
 
-#endif  // ADDCOMPANYDIALOG_H
+#endif // ADDCOMPANYDIALOG_H

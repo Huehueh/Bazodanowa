@@ -7,41 +7,87 @@
 #include <QSqlRecord>
 #include <QSqlTableModel>
 
+#include "dbmanager.h"
 #include "enums.h"
 
-AddCompanyDialog::AddCompanyDialog(QSqlTableModel *model, QWidget *parent)
-    : QDialog(parent), ui(new Ui::AddCompanyDialog), m_pModel(model),
-      m_pMapper(nullptr) {
+AddCompanyDialog::AddCompanyDialog(CompanyType company, QWidget *parent)
+    : QDialog(parent), ui(new Ui::AddCompanyDialog), m_pMapper(nullptr),
+      m_CompanyType(company) {
+
   ui->setupUi(this);
+
+  switch (m_CompanyType) {
+  case CompanyType::Main:
+  default: {
+    m_pModel = DbManager::CreateMyCompaniesModel();
+    break;
+  }
+  case CompanyType::Contactor: {
+    m_pModel = DbManager::CreateContractorsModel();
+    break;
+  }
+  }
 
   m_pMapper = new QDataWidgetMapper();
   m_pMapper->setSubmitPolicy(QDataWidgetMapper::ManualSubmit);
-  m_pMapper->setModel(model);
-  model->insertRow(model->rowCount(QModelIndex()));
+  m_pMapper->setModel(m_pModel);
+  m_pModel->insertRow(m_pModel->rowCount(QModelIndex()));
   m_pMapper->toLast();
 
-  // shortcut
-  m_pMapper->addMapping(ui->shortcutLineEdit, MojaFirma::Skrot);
-
-  // name
-  m_pMapper->addMapping(ui->nameLineEdit, MojaFirma::Nazwa);
-
-  // nip
-  m_pMapper->addMapping(ui->nipLineEdit, MojaFirma::NIP);
-  QRegExp rx("[0-9]\\d{0,9}");
-  auto validator = new QRegExpValidator(rx, this);
-  ui->nipLineEdit->setValidator(validator);
-
-  // address
-  m_pMapper->addMapping(ui->addressLineEdit, MojaFirma::Adres);
-
-  // email
-  m_pMapper->addMapping(ui->emailLineEdit, MojaFirma::Email);
+  CreateUi();
 
   connect(ui->okButton, &QPushButton::clicked, this,
           &AddCompanyDialog::OnAccept);
   connect(ui->cancelButton, &QPushButton::clicked, this,
           &AddCompanyDialog::OnCancel);
+}
+
+void AddCompanyDialog::CreateUi() {
+  QRegExp rx("[0-9]\\d{0,9}");
+  auto numberValidator = new QRegExpValidator(rx, this);
+
+  switch (m_CompanyType) {
+  case CompanyType::Main: {
+
+    // shortcut
+    m_pMapper->addMapping(ui->shortcutLineEdit, MojaFirma::Skrot);
+
+    // name
+    m_pMapper->addMapping(ui->nameLineEdit, MojaFirma::Nazwa);
+
+    // nip
+    m_pMapper->addMapping(ui->nipLineEdit, MojaFirma::NIP);
+    ui->nipLineEdit->setValidator(numberValidator);
+
+    // address
+    m_pMapper->addMapping(ui->addressLineEdit, MojaFirma::Adres);
+
+    // email
+    ui->emailLineEdit->setVisible(false);
+
+    break;
+  }
+  case CompanyType::Contactor: {
+
+    // shortcut
+    ui->shortcutLineEdit->setVisible(false);
+
+    // name
+    m_pMapper->addMapping(ui->nameLineEdit, Kontrahent::Nazwa);
+
+    // nip
+    m_pMapper->addMapping(ui->nipLineEdit, Kontrahent::NIP);
+    ui->nipLineEdit->setValidator(numberValidator);
+
+    // address
+    m_pMapper->addMapping(ui->addressLineEdit, Kontrahent::Adres);
+
+    // email
+    // m_pMapper->addMapping(ui->emailLineEdit, MojaFirma::Email);
+
+    break;
+  }
+  }
 }
 
 void AddCompanyDialog::OnAccept() {

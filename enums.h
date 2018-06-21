@@ -31,7 +31,7 @@ struct MojaFirma {
 };
 
 struct Kontrahent {
-  enum eData { Id, Nazwa, NIP, Pesel, LiczbaKolumn };
+  enum eData { Id, Nazwa, NIP, Pesel, Adres, LiczbaKolumn };
 };
 
 #endif // ENUMS_H

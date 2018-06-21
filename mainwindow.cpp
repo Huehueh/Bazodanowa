@@ -72,7 +72,7 @@ void MainWindow::OnOpenButtonClicked() {
 }
 
 void MainWindow::OnAddButtonClicked() {
-  AddCompanyDialog *dialog = new AddCompanyDialog(m_tableModel, this);
+  AddCompanyDialog *dialog = new AddCompanyDialog(CompanyType::Main, this);
   auto result = dialog->exec();
   auto last = m_tableModel->rowCount() - 1;
 

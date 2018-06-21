@@ -8,6 +8,7 @@
 
 #include "enums.h"
 
+#include "contractorsdialog.h"
 #include "salepurchasedelegate.h"
 
 SalePurchaseDialog::SalePurchaseDialog(int companyId, QWidget *parent)
@@ -34,7 +35,7 @@ void SalePurchaseDialog::SetupDateEdit(QDateEdit *dateEdit) {
   calendar->setWindowFlags(Qt::Popup);
   dateEdit->installEventFilter(this);
   dateEdit->setButtonSymbols(QAbstractSpinBox::NoButtons);
-  connect(calendar, &QCalendarWidget::clicked,
+  connect(calendar, &QCalendarWidget::clicked, this,
           [dateEdit, calendar](QDate date) {
             dateEdit->setDate(date);
             calendar->hide();
@@ -53,6 +54,18 @@ void SalePurchaseDialog::SetupSaleTab() {
   view->hideColumn(Sprzedaz::Id);
   // view->setItemDelegate(new SalePurchaseDelegate(view));
   CreateSalesMapper();
+
+  connect(ui->addContractorButton, &QPushButton::clicked, this,
+          &SalePurchaseDialog::OpenContractorDialog);
+}
+
+void SalePurchaseDialog::OpenContractorDialog() {
+  int selectedContractor = 0;
+  auto onAccept = [&selectedContractor](int value) {
+    selectedContractor = value;
+  };
+  ContractorsDialog *dialog = new ContractorsDialog(onAccept, this);
+  dialog->exec();
 }
 
 void SalePurchaseDialog::SetupPurchaseTab() {

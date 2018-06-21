@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     dbmanager.cpp \
     addcompanydialog.cpp \
     companydialog.cpp \
-    salepurchasedelegate.cpp
+    salepurchasedelegate.cpp \
+    contractorsdialog.cpp
 
 HEADERS  += mainwindow.h \
     dbmanager.h \
@@ -26,8 +27,10 @@ HEADERS  += mainwindow.h \
     salepurchasedelegate.h \
     enums.h \
     columnnames.h \
-    names.h
+    names.h \
+    contractorsdialog.h
 
 FORMS    += mainwindow.ui \
     companydialog.ui \
-    addcompanydialog.ui
+    addcompanydialog.ui \
+    contractorsdialog.ui
