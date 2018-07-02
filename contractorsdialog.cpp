@@ -2,6 +2,7 @@
 #include "ui_contractorsdialog.h"
 
 #include "dbmanager.h"
+#include "enums.h"
 
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -33,5 +34,7 @@ void ContractorsDialog::SetupUi() {
   view->setSelectionBehavior(QAbstractItemView::SelectRows);
   view->setSelectionMode(QAbstractItemView::SingleSelection);
   view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  view->hideColumn(Kontrahent::Id);
   view->selectRow(0);
+
 }

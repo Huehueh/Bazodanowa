@@ -6,10 +6,13 @@
 #include <QDialog>
 #include <QSqlTableModel>
 #include <memory>
+#include <QGridLayout>
+#include <QDataWidgetMapper>
 
 namespace Ui {
 class CompanyDialog;
 }
+
 
 class SalePurchaseDialog : public QDialog {
   Q_OBJECT
@@ -28,13 +31,15 @@ private:
   void SetupSaleTab();
   void SetupPurchaseTab();
   void CreateSalesMapper();
-
   void SetupDateEdit(QDateEdit *dateEdit);
+  void SelectContractor(int id);
+  void LoadKValues(QSqlTableModel* model, int minCol, int maxCol, QGridLayout* layout, QDataWidgetMapper* mapper);
 
   Ui::CompanyDialog *ui = nullptr;
   int mCompanyId;
   QSqlTableModel *m_pSalesModel = nullptr;
   QSqlTableModel *m_pPurchaseModel = nullptr;
+  int m_SelectedIndex;
 };
 
 #endif // COMPANYDIALOG_H
