@@ -1,4 +1,4 @@
-#include "companydialog.h"
+#include "salepurchasedialog.h"
 #include "ui_companydialog.h"
 
 #include "dbmanager.h"
@@ -64,14 +64,10 @@ void SalePurchaseDialog::SetupSaleTab()
           &QItemSelectionModel::currentRowChanged,this, [this](const QModelIndex& current){
       m_SelectedIndex = current.row();
   });
-
-
-
-
-
 }
 
-void SalePurchaseDialog::OpenContractorDialog() {
+void SalePurchaseDialog::OpenContractorDialog()
+{
   int id = 0;
   auto onAccept = [&id](int value) {
     id = value;
@@ -90,7 +86,8 @@ void SalePurchaseDialog::SelectContractor(int /*id*/)
     //ui->saleTableView->
 }
 
-void SalePurchaseDialog::SetupPurchaseTab() {
+void SalePurchaseDialog::SetupPurchaseTab()
+{
   auto view = ui->purchaseTableView;
   view->setModel(m_pPurchaseModel);
   view->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -100,6 +97,8 @@ void SalePurchaseDialog::SetupPurchaseTab() {
   view->hideColumn(Zakup::FirmaId);
   view->hideColumn(Zakup::Id);
   // view->setItemDelegate(new SalePurchaseDelegate(view));
+
+  CreatePurchaseMapper();
 }
 
 void SalePurchaseDialog::LoadKValues(QSqlTableModel* model, int minCol, int maxCol, QGridLayout* layout, QDataWidgetMapper* mapper)
@@ -120,8 +119,40 @@ void SalePurchaseDialog::LoadKValues(QSqlTableModel* model, int minCol, int maxC
         auto label = new QLineEdit();
         layout->addWidget(label, rowNumber, columnNumber+1, Qt::AlignLeft);
         mapper->addMapping(label, i);
-
     }
+}
+
+void SalePurchaseDialog::CreatePurchaseMapper() {
+  // form
+  auto mapper = new QDataWidgetMapper(this);
+  mapper->setSubmitPolicy(QDataWidgetMapper::AutoSubmit);
+  mapper->setModel(m_pPurchaseModel);
+  mapper->addMapping(ui->purchaseDateEdit, Zakup::DataZakupu);
+  SetupDateEdit(ui->purchaseDateEdit);
+  mapper->addMapping(ui->creditDateEdit, Zakup::DataWplywu);
+  SetupDateEdit(ui->creditDateEdit);
+  mapper->addMapping(ui->invoiceEdit_2, Zakup::DowodZakupu);
+  mapper->addMapping(ui->contractorLabel_2, Zakup::KontrahentId);
+
+  LoadKValues(m_pSalesModel, 6, m_pPurchaseModel->columnCount(), ui->kPurchaseGridLayout, mapper);
+
+//  auto contractorModel = DbManager::CreateContractorsModel();
+//  QStringList contractorNames;
+//  for (int i = 0; i < contractorModel->rowCount(); ++i) {
+//    contractorNames.append(
+//        contractorModel->record(i).value(Kontrahent::Nazwa).toString());
+//  }
+//  contractorModel->deleteLater();
+//  ui->contractorBox->addItems(contractorNames);
+
+ // mapper->setItemDelegate(new SalePurchaseDelegate(mapper));
+  mapper->toFirst();
+
+  connect(ui->purchaseTableView->selectionModel(),
+          &QItemSelectionModel::currentRowChanged,
+          [mapper](const QModelIndex &index) {
+            mapper->setCurrentIndex(index.row());
+          });
 }
 
 void SalePurchaseDialog::CreateSalesMapper() {
@@ -136,7 +167,7 @@ void SalePurchaseDialog::CreateSalesMapper() {
   mapper->addMapping(ui->invoiceEdit, Sprzedaz::DowodSprzedazy);
   mapper->addMapping(ui->contractorBox, Sprzedaz::KontrahentId);
 
-  LoadKValues(m_pSalesModel, 6, m_pSalesModel->columnCount(), ui->kGridLayout, mapper);
+  LoadKValues(m_pSalesModel, 6, m_pSalesModel->columnCount(), ui->kSalesGridLayout, mapper);
 
   auto contractorModel = DbManager::CreateContractorsModel();
   QStringList contractorNames;
@@ -155,9 +186,8 @@ void SalePurchaseDialog::CreateSalesMapper() {
           [mapper](const QModelIndex &index) {
             mapper->setCurrentIndex(index.row());
           });
-
-
 }
+
 bool SalePurchaseDialog::eventFilter(QObject *object, QEvent *event) {
   if (event->type() == QEvent::InputMethodQuery) {
     auto dateEdit = qobject_cast<QDateEdit *>(object);

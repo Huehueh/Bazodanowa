@@ -8,7 +8,7 @@
 #include <QSqlDatabase>
 #include <QTableView>
 
-#include "companydialog.h"
+#include "salepurchasedialog.h"
 #include "enums.h"
 
 MainWindow::MainWindow(QWidget *parent)

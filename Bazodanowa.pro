@@ -16,19 +16,19 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     dbmanager.cpp \
     addcompanydialog.cpp \
-    companydialog.cpp \
     salepurchasedelegate.cpp \
-    contractorsdialog.cpp
+    contractorsdialog.cpp \
+    salepurchasedialog.cpp
 
 HEADERS  += mainwindow.h \
     dbmanager.h \
     addcompanydialog.h \
-    companydialog.h \
     salepurchasedelegate.h \
     enums.h \
     columnnames.h \
     names.h \
-    contractorsdialog.h
+    contractorsdialog.h \
+    salepurchasedialog.h
 
 FORMS    += mainwindow.ui \
     companydialog.ui \

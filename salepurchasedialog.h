@@ -1,5 +1,5 @@
-#ifndef COMPANYDIALOG_H
-#define COMPANYDIALOG_H
+#ifndef SALEPURCHASEDIALOG_H
+#define SALEPURCHASEDIALOG_H
 
 #include <QCalendarWidget>
 #include <QDateEdit>
@@ -31,6 +31,7 @@ private:
   void SetupSaleTab();
   void SetupPurchaseTab();
   void CreateSalesMapper();
+  void CreatePurchaseMapper();
   void SetupDateEdit(QDateEdit *dateEdit);
   void SelectContractor(int id);
   void LoadKValues(QSqlTableModel* model, int minCol, int maxCol, QGridLayout* layout, QDataWidgetMapper* mapper);
@@ -42,4 +43,4 @@ private:
   int m_SelectedIndex;
 };
 
-#endif // COMPANYDIALOG_H
+#endif // SALEPURCHASEDIALOG_H
