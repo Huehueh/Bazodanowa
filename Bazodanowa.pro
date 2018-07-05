@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     addcompanydialog.cpp \
     salepurchasedelegate.cpp \
     contractorsdialog.cpp \
-    salepurchasedialog.cpp
+    salepurchasedialog.cpp \
+    dictionarydialog.cpp
 
 HEADERS  += mainwindow.h \
     dbmanager.h \
@@ -28,7 +29,8 @@ HEADERS  += mainwindow.h \
     columnnames.h \
     names.h \
     contractorsdialog.h \
-    salepurchasedialog.h
+    salepurchasedialog.h \
+    dictionarydialog.h
 
 FORMS    += mainwindow.ui \
     companydialog.ui \

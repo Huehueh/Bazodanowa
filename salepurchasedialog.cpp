@@ -10,10 +10,13 @@
 
 #include "contractorsdialog.h"
 #include "salepurchasedelegate.h"
+#include "dictionarydialog.h"
 
 SalePurchaseDialog::SalePurchaseDialog(int companyId, QWidget *parent)
     : QDialog(parent), ui(new Ui::CompanyDialog), mCompanyId(companyId), m_SelectedIndex(0) {
   ui->setupUi(this);
+
+  connect(ui->dictButton, &QPushButton::clicked, this, &SalePurchaseDialog::OpenDictionaryDialog);
 
   m_pSalesModel = DbManager::CreateSalesModel(mCompanyId);
   //  m_pSalesModel->setEditStrategy(QSqlTableModel::OnFieldChange);
@@ -27,6 +30,13 @@ SalePurchaseDialog::~SalePurchaseDialog() {
   delete ui;
   delete m_pSalesModel;
   delete m_pPurchaseModel;
+}
+
+void SalePurchaseDialog::OpenDictionaryDialog()
+{
+    auto dialog = new DictionaryDialog(this);
+    dialog->setModal(true);
+    dialog->show();
 }
 
 void SalePurchaseDialog::SetupDateEdit(QDateEdit *dateEdit)

@@ -26,6 +26,7 @@ protected:
 
 private slots:
   void OpenContractorDialog();
+  void OpenDictionaryDialog();
 
 private:
   void SetupSaleTab();
@@ -34,7 +35,7 @@ private:
   void CreatePurchaseMapper();
   void SetupDateEdit(QDateEdit *dateEdit);
   void SelectContractor(int id);
-  void LoadKValues(QSqlTableModel* model, int minCol, int maxCol, QGridLayout* layout, QDataWidgetMapper* mapper);
+  void LoadKValues(QSqlTableModel* model, int minCol, int maxCol, QGridLayout* layout, QDataWidgetMapper* mapper);  
 
   Ui::CompanyDialog *ui = nullptr;
   int mCompanyId;
